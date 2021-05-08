@@ -3,8 +3,7 @@ unit HGM.GraphQL;
 interface
 
 uses
-  System.Classes, REST.Client, System.StrUtils, REST.Types, System.SysUtils, System.Net.URLClient, System.Net.HttpClient,
-  System.JSON, HGM.GraphQL.Query;
+  System.Classes, REST.Client, System.StrUtils, REST.Types, System.SysUtils, System.JSON, HGM.GraphQL.Query;
 
 type
   TGraphQL = class(TComponent)
@@ -22,7 +21,7 @@ type
 implementation
 
 uses
-  System.NetConsts, REST.Json, Winapi.Windows, System.Net.Mime;
+  System.NetConsts;
 
 { TGraphQL }
 
@@ -31,14 +30,12 @@ var
   Body: TJSONObject;
   Request: TRESTRequest;
 begin
-  OutputDebugString(PChar(Query));
   Response := nil;
   Body := TJSONObject.Create;
   Body.AddPair('operationName', OperationName);
   Body.AddPair('query', Query);
   if Assigned(Variables) then
     Body.AddPair('variables', Variables);
-  OutputDebugString(PChar(TJSON.JsonEncode(Body)));
   Request := TRESTRequest.Create(nil);
   Request.Client := Client;
   try
@@ -48,12 +45,9 @@ begin
     with Request.Response do
     begin
       Response := TJSONObject(TJSONObject.ParseJSONValue(Content));
-      OutputDebugString(PChar(Content));
-      //BodyText.Text := Content;
       Result := StatusCode;
     end;
   finally
-    //Body.Free;
     Request.Free;
   end;
 end;

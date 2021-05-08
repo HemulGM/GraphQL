@@ -18,8 +18,6 @@ type
 
   TGraphArgVar = class;
 
-  //
-
   TGraphArgValue = class abstract
   public
     function ToString: string; reintroduce; virtual; abstract;
