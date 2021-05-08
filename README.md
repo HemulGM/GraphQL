@@ -34,6 +34,7 @@ with TGraphQuery.Create('query', 'query_name') do
       .AddField(TGraphField.Create('totalCount')));
     if GraphQL.Call(Response, Query) = 200 then
      ...
+    ShowMessage(Query.ToString); 
     Free;
   end;
   ```
