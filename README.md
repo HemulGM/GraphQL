@@ -2,6 +2,16 @@
  GraphQL Query Constructor
 
 ```Pascal
+GraphQL: TGraphQL;
+Response: TJSONObject;
+...
+GraphQL := TGraphQL.Create(Self);
+GraphQL.Client.BaseUrl := 'https:\\api.site.io';
+if GraphQL.Call(Response, Query) = 200 then
+ ...
+```
+
+```Pascal
 with TGraphQuery.Create('query', 'query_name') do
   begin
     AddMethod('bonuses', 
