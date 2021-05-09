@@ -3,10 +3,11 @@ unit HGM.GraphQL;
 interface
 
 uses
-  System.Classes, REST.Client, System.StrUtils, REST.Types, System.SysUtils, System.JSON, HGM.GraphQL.Query;
+  System.Classes, REST.Client, REST.Json.Types, System.StrUtils, REST.Types, System.SysUtils, System.JSON,
+  HGM.GraphQL.Query;
 
 type
-  TGraphQL = class(TComponent)
+  TGraphQLClient = class(TComponent)
   private
     FClient: TRESTClient;
   public
@@ -23,9 +24,9 @@ implementation
 uses
   System.NetConsts;
 
-{ TGraphQL }
+{ TGraphQLClient }
 
-function TGraphQL.Call(out Response: TJSONObject; const OperationName, Query: string; Variables: TJSONObject): Integer;
+function TGraphQLClient.Call(out Response: TJSONObject; const OperationName, Query: string; Variables: TJSONObject): Integer;
 var
   Body: TJSONObject;
   Request: TRESTRequest;
@@ -52,7 +53,7 @@ begin
   end;
 end;
 
-function TGraphQL.Call(const OperationName, Query: string; Variables: TJSONObject): Integer;
+function TGraphQLClient.Call(const OperationName, Query: string; Variables: TJSONObject): Integer;
 var
   Response: TJSONObject;
 begin
@@ -61,12 +62,12 @@ begin
     Response.Free;
 end;
 
-function TGraphQL.Call(out Response: TJSONObject; Query: TGraphQuery; Variables: TJSONObject): Integer;
+function TGraphQLClient.Call(out Response: TJSONObject; Query: TGraphQuery; Variables: TJSONObject): Integer;
 begin
   Result := Call(Response, Query.Name, Query.ToString, Variables);
 end;
 
-constructor TGraphQL.Create(AOwner: TComponent);
+constructor TGraphQLClient.Create(AOwner: TComponent);
 begin
   inherited;
   FClient := TRESTClient.Create(nil);
@@ -74,7 +75,7 @@ begin
   FClient.ContentType := CONTENTTYPE_APPLICATION_JSON;
 end;
 
-destructor TGraphQL.Destroy;
+destructor TGraphQLClient.Destroy;
 begin
   FClient.Free;
   inherited;
