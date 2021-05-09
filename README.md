@@ -1,5 +1,5 @@
 # GraphQL
- GraphQL Query Constructor
+ GraphQL Query Constructor [only]
 
 ```Pascal
 GraphQL: TGraphQL;
