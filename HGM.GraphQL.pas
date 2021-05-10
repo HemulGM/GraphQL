@@ -40,7 +40,7 @@ begin
   Request := TRESTRequest.Create(nil);
   Request.Client := Client;
   try
-    Request.AddParameter(CONTENTTYPE_APPLICATION_JSON, Body);
+    Request.AddBody(Body);
     Request.Method := TRESTRequestMethod.rmPOST;
     Request.Execute;
     with Request.Response do
@@ -50,6 +50,7 @@ begin
     end;
   finally
     Request.Free;
+    Body.Free;
   end;
 end;
 
