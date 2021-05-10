@@ -18,7 +18,8 @@ type
     function ToString: string; reintroduce;
     constructor Create(const AName: string);
     destructor Destroy; override;
-    function AddSub(const Item: TGraphField): TGraphField;
+    function AddSub(const Item: TGraphField): TGraphField; overload;
+    function AddSub(const Item: string): TGraphField; overload;
     function AddArg(const Item: TGraphArg): TGraphField;
     property Args: TGraphArgList read FArgs;
     property SubFields: TGraphFields read FSubFields;
@@ -49,6 +50,12 @@ end;
 function TGraphField.AddSub(const Item: TGraphField): TGraphField;
 begin
   SubFields.Add(Item);
+  Result := Self;
+end;
+
+function TGraphField.AddSub(const Item: string): TGraphField;
+begin
+  SubFields.Add(TGraphField.Create(Item));
   Result := Self;
 end;
 

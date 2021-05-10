@@ -61,6 +61,7 @@ type
     function AddPair(const Name: string; const Value: Extended): TGraphArgObject; overload;
     function AddPair(const Name: string; const Value: Boolean): TGraphArgObject; overload;
     function AddPair(const Name: string; const Value: TGraphArgValue): TGraphArgObject; overload;
+    function AddPair(const Name: string; const Value: TArray<Integer>): TGraphArgObject; overload;
   public
     function ToString: string; override;
     property Items: TObjectList<TGraphArg> read FItems write SetItems;
@@ -213,6 +214,12 @@ begin
 end;
 
 function TGraphArgObject.AddPair(const Name: string; const Value: TGraphArgValue): TGraphArgObject;
+begin
+  FItems.Add(TGraphArg.Create(Name, Value));
+  Result := Self;
+end;
+
+function TGraphArgObject.AddPair(const Name: string; const Value: TArray<Integer>): TGraphArgObject;
 begin
   FItems.Add(TGraphArg.Create(Name, Value));
   Result := Self;
